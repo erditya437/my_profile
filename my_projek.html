@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #121212;
+            color: #ffffff;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url("assets/bg13.jpg") no-repeat center center/cover;
+            position: relative;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.425);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+           background: linear-gradient(#fe6e0041,#c12e012f);
+           text-shadow: 0 3px 5px rgba(0, 0, 0, 0.9);
+           
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #b50707;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.1s ease-in-out;
+            font-size: 18px;
+        }
+
+        .btn:hover {
+            background: #760404;
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(205, 38, 0, 0.9);
+        }
+
+        /* Projects Section */
+        .projects-container {
+            padding: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: rgba(78, 79, 79, 0.203);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.5s ease-in-out;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 10px 20px rgba(241, 238, 238, 0.5);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .project-text {
+            padding: 15px;
+        }
+
+        .project-text h3 {
+            font-size: 22px;
+            color: #00fef1;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-shadow: 0 3px 5px  rgba(43, 206, 255, 0.9);
+        }
+
+        .project-text p {
+            font-size: 16px;
+            color: #ffffff;
+            font-weight: 400;
+        }
+
+        .project-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .project-list li {
+            font-size: 14px;
+            background: rgba(255, 255, 254, 0.2);
+            padding: 8px;
+            border-radius: 8px;
+            margin: 5px 0;
+            font-weight: 500;
+            transition: 0.3s ease-in-out;
+            color: #ffffff;
+        }
+
+        .project-list li:hover {
+            background: #018508;
+            transform: scale(1.05);
+            box-shadow: 0 8px 10px rgba(100, 253, 66, 0.957);
+        }
+
+        /* Footer */
+        footer {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+/* Loading Overlay ala Game */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: rgb(51, 255, 0);
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Press Start 2P', cursive;
+    z-index: 9999;
+    display: none; /* Sembunyikan dulu */
+}
+
+.loading-text {
+    font-size: 24px;
+    animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+.loading-bar {
+    width: 200px;
+    height: 20px;
+    border: 3px solid rgb(21, 125, 5);
+    position: relative;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.loading-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: rgb(22, 240, 2);
+    animation: load-bar 2s linear forwards;
+}
+
+@keyframes load-bar {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s forwards ease-in-out;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efek Slide-Up (Tambahan untuk elemen proyek) */
+.slide-up {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideUp 1s forwards ease-in-out;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay ala Game -->
+<div class="loading-overlay" id="loading-screen">
+    <div class="loading-text">LOADING...</div>
+    <div class="loading-bar">
+        <div class="loading-bar-fill"></div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let loadingScreen = document.getElementById("loading-screen");
+    
+        function addLoadingEffect(buttonId) {
+            let btn = document.getElementById(buttonId);
+            if (btn) {
+                btn.addEventListener("click", function(event) {
+                    event.preventDefault(); // Cegah langsung pindah halaman
+                    loadingScreen.style.display = "flex"; // Munculkan loading screen
+                    
+                    setTimeout(() => {
+                        window.location.href = this.href; // Arahkan ke halaman tujuan setelah loading
+                    }, 2000);
+                });
+            }
+        }
+    
+        addLoadingEffect("btn-back"); // Efek untuk tombol "Back"
+        addLoadingEffect("btn-view-projects"); // Efek untuk tombol "View My Projects" (jika ada)
+    });
+    </script>
+    
+
+
+
+
+
+    <section class="hero fade-in">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>My Projects</h1>
+            <p>
+                Saya seorang Web Developer yang berfokus pada Backend & UI/UX Design.  
+                Berikut adalah beberapa proyek saya! 🔥
+            </p>
+            <a href="index.html" class="btn" id="btn-back">Back</a>
+
+        </div>
+    </section>
+
+    <section class="projects-container">
+        <div class="project-card slide-up">
+            <img src="assets/pj3.png" alt="Website Warung Bu Alex">
+            <div class="project-text">
+                <h3>Website Warung Bu Alex 🍛🍽️</h3>
+                <p>Sebuah website pemesanan makanan untuk Warung Bu Alex.</p>
+                <ul class="project-list">
+                    <li>✅ Menu Kategori</li>
+                    <li>✅ Pemesanan Online</li>
+                    <li>✅ Sistem Transaksi</li>
+                    <li>✅ Detail Menu</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="project-card slide-up">
+            <img src="assets/pj2.png" alt="Grosir Online">
+            <div class="project-text">
+                <h3>Grosir Online 🛒📦</h3>
+                <p>Marketplace untuk membeli barang grosir secara online.</p>
+                <ul class="project-list">
+                    <li>✅ Sistem Login</li>
+                    <li>✅ Keranjang Belanja</li>
+                    <li>✅ Metode Pembayaran</li>
+                    <li>✅ Riwayat Transaksi</li>
+                    <li>✅ Fitur Chat</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="project-card slide-up">
+            <img src="assets/pj1.png" alt="Social Media">
+            <div class="project-text">
+                <h3>Social Media 📱💬</h3>
+                <p>Aplikasi sosial media dengan fitur interaksi pengguna.</p>
+                <ul class="project-list">
+                    <li>✅ Likes & Komentar</li>
+                    <li>✅ Fitur Chat Antar Pengguna</li>
+                    <li>✅ User Bisa Posting</li>
+                    <li>✅ Sistem Pertemanan</li>
+                    <li>✅ Notifikasi & Balasan Komentar</li>
+                    <li>✅  Pencarian Username untuk menemukan teman dengan mudah</li>
+                </ul>
+            </div>
+        </div>
+        <div class="project-card slide-up">
+            <img src="assets/pj4.png" alt="Social Media">
+            <div class="project-text">
+                <h3>Sistem Absensi 📌</h3>
+                <p>Sistem Absensi ini dirancang untuk mempermudah proses pencatatan kehadiran siswa secara digital.</p>
+                
+                <ul class="project-list">
+                    <li>✅ Murid dapat melakukan absensi secara mandiri</li>
+                    <li>✅ Murid dapat mengunggah tugas langsung ke sistem</li>
+                    <li>✅ Murid bisa menghubungi guru pengampu</li>
+                    <li>✅ Guru dapat melihat daftar siswa yang sudah absen dan mengumpulkan tugas</li>
+                    <li>✅ Guru bisa melihat statistik jumlah murid yang sudah absen</li>
+                    <li>✅ Guru dapat mengekspor laporan absensi ke format PDF</li>
+                </ul>
+            </div>
+        </div>
+        <div class="project-card slide-up">
+            <img src="assets/pj5.png" alt="Social Media">
+            <div class="project-text">
+                <h3>Data Keuangan Mandiri 💰📊</h3>
+                <p>Aplikasi Data Keuangan Mandiri adalah sistem pencatatan keuangan yang memungkinkan pengguna untuk mengelola pemasukan, pengeluaran, dan laporan keuangan secara real-time. </p>
+                <ul class="project-list">
+                    <li>✅ Ringkasan saldo, pemasukan, dan pengeluaran secara real-time</li>
+                    <li>✅ Riwayat transaksi yang dapat diakses kapan saja</li>
+                    <li>✅  Pencatatan pemasukan dan pengeluaran dengan kategori yang jelas</li>
+                    <li>✅  Keamanan data dengan sistem login dan enkripsi</li>
+                </ul>
+            </div>
+        </div>
+        <div class="project-card slide-up">
+            <img src="assets/pj6.png" alt="Social Media">
+            <div class="project-text">
+                <h3>Sistem Absensi Manual 📋✏️</h3>
+                <p>Sistem Absensi Manual adalah aplikasi pencatatan kehadiran yang memungkinkan guru untuk mengelola data absensi murid secara efisien dengan metode input data langsung. </p>
+                <ul class="project-list">
+                    <li>✅ Guru dapat mencatat absensi murid secara manual berdasarkan nama</li>
+                    <li>✅  Fitur "Hadirkan Semua" untuk menandai seluruh murid sebagai hadir</li>
+                    <li>✅ Guru bisa mengedit atau menghapus absensi jika terjadi kesalahan</li>
+                    <li>✅Fitur pencarian berdasarkan inisial atau nama murid untuk kemudahan pencatatan</li>
+                    <li>✅ Export laporan absensi ke file PDF untuk dokumentasi dan rekapitulasi</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p> Adit. Semua Hak Dilindungi.</p>
+    </footer>
+
+</body>
+</html>
